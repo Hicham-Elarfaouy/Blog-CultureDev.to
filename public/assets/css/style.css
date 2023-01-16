@@ -1,0 +1,41 @@
+.post-description, .post-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e5e5e5;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c7c7c7;
+}
+
+* {
+  font-family: "Rubik", serif;
+  box-sizing: border-box;
+}
+
+.post-title {
+  -webkit-line-clamp: 2;
+}
+
+.post-description {
+  -webkit-line-clamp: 4;
+}
+
+.fw-w300 {
+  font-weight: 300;
+}
+
+.bg-header {
+  background-color: #dbdbdb;
+}
+
+/*# sourceMappingURL=style.css.map */
