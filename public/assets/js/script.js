@@ -1,3 +1,7 @@
+$(document).ready(function () {
+    $('#example').DataTable();
+});
+
 function togglePassword(input){
     const togglePassword = document.querySelector('#iconPassword');
     const password = document.getElementById(input);
