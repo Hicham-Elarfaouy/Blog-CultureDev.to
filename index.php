@@ -1,3 +1,6 @@
+<?php
+require_once './app/controller/shared.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +16,7 @@
 <body>
 <header class="navbar navbar-expand-lg bg-header">
     <div class="container-fluid">
-        <a class="navbar-brand" href="./index.html">Culture Dev</a>
+        <a class="navbar-brand" href="index.php">Culture Dev</a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -22,16 +25,12 @@
         <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="./index.html">Home</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./index.html">Contact Us</a>
+                    <a class="nav-link" href="index.php">Contact Us</a>
                 </li>
             </ul>
-            <!--<?php
-            if (isset($_SESSION['user'])) {
-            $name = $_SESSION['user'][1].' '.$_SESSION['user'][2];
-            echo '-->
             <div class="navbar-item navbar-user dropdown">
                 <div style="cursor: pointer" class="navbar-link dropdown-toggle d-flex align-items-center"
                      data-bs-toggle="dropdown">
@@ -59,6 +58,19 @@
     </div>
 </header>
 <main>
+    <?php if (isset($_SESSION['message'])): ?>
+        <div class="d-flex justify-content-center">
+            <div class="alert alert-secondary alert-dismissible fade show mt-5 w-50">
+                <strong>Message : </strong>
+                <?php
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+                ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                </button>
+            </div>
+        </div>
+    <?php endif ?>
     <div class="row mx-2 my-5">
         <div class=" d-none d-md-block col-lg-3 col-md-3">
             <div class="card">
@@ -78,27 +90,13 @@
                 <form>
                     <div class="input-group">
                         <input type="text" id="search" class="form-control" placeholder="Search..."
-                               value=""/> <!--<?= $search = $_GET['search'] ?? ''; ?>-->
+                               value=""/>
                         <button type="button" onclick="search_product('index')" class="input-group-text"><i
                                 class="fa fa-search"></i></button>
                     </div>
                 </form>
             </div>
             <div class="row g-3 mt-1 justify-content-center justify-content-md-start">
-                <!--<?php
-                $cat = $_GET['cat'] ?? '';
-                $sort = $_GET['sort'] ?? '';
-                $search = $_GET['search'] ?? '';
-                $result = get_products($cat, $sort, $search);
-                while($row = mysqli_fetch_array($result)){
-                    $image = $row['image'] == '' ? 'default.jpg' : $row['image'];
-                    $display = 'd-none';
-                    $discount = $row['price'];
-                    if($row['discount'] > 0){
-                $display = '';
-                $discount -= $row['price'] * ($row['discount'] / 100);
-                }
-                echo "-->
                 <div class='col-xl-3 col-lg-4 col-md-6 col-sm-8'>
                     <div class='card'>
                         <a target="_blank" href="skjhc.html">
