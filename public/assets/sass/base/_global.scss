@@ -1,0 +1,22 @@
+* {
+  font-family: "Rubik", serif;
+  box-sizing: border-box;
+}
+
+.post-title{
+  -webkit-line-clamp: 2;
+  @extend %truncate-text;
+}
+
+.post-description{
+  -webkit-line-clamp: 4;
+  @extend %truncate-text;
+}
+
+.fw-w300{
+  font-weight: 300;
+}
+
+.bg-header{
+  background-color: $header-color;
+}
