@@ -36,7 +36,7 @@ function Login($email, $pass): void
         if (password_verify($pass, $result['pass'])) {
             $_SESSION['userId'] = $result['id'];
 
-            header('location: ./public/dashboard/categorie.html');
+            header('location: ./public/dashboard/categorie.php');
             die();
         }
 

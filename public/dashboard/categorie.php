@@ -1,3 +1,6 @@
+<?php
+    require_once __DIR__.'/../../app/controller/shared.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +28,9 @@
             <ul class="navbar-nav ms-auto me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="../../index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../../index.php">Statistics</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../../index.php">Posts</a>
@@ -67,7 +73,7 @@
     <div class="card shadow my-5 container">
         <div class="d-sm-flex align-items-center justify-content-between m-4 mb-2">
             <h1 class="h5 mb-0">Categories</h1>
-            <button class="btn btn-sm shadow-sm bg-success text-white"><i class="fa-solid fa-plus fa-md"></i>
+            <button onclick="openModal('#cat_modal')" class="btn btn-sm shadow-sm bg-success text-white"><i class="fa-solid fa-plus fa-md"></i>
                 Add Categories
             </button>
         </div>
@@ -82,24 +88,23 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>
-                            <div class='d-flex justify-content-around'>
-                                <i role='button' class='fa-solid fa-pen-to-square text-primary'></i>
-                                <i role='button' class='fa-solid fa-trash-can text-danger ms-3'></i>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Donna Snider</td>
-                        <td>
-                            <div class='d-flex justify-content-around'>
-                                <i role='button' class='fa-solid fa-pen-to-square text-primary'></i>
-                                <i role='button' class='fa-solid fa-trash-can text-danger ms-3'></i>
-                            </div>
-                        </td>
-                    </tr>
+                    <?php
+                        foreach (get_cat() as $cat){
+                            $d = $cat['id'];
+                            $dd = $cat['name'];
+                            echo "
+                            <tr>
+                                <td>$cat[name]</td>
+                                <td>
+                                    <div class='d-flex justify-content-around'>
+                                        <i role='button' onclick='openEditCat(`#cat_modal`, $cat[id], `$cat[name]`)' class='fa-solid fa-pen-to-square text-primary'></i>
+                                        <i role='button' onclick='deleteCat($cat[id])' class='fa-solid fa-trash-can text-danger ms-3'></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            ";
+                        }
+                    ?>
                     </tbody>
                     <tfoot>
                     <tr>
@@ -113,6 +118,37 @@
     </div>
 
 </main>
+
+<div class="modal fade" id="cat_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="../../index.php" method="POST" id="form" enctype="multipart/form-data"
+                  data-parsley-validate>
+                <div class="modal-header">
+                    <h5 class="modal-title">Categories</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="cat-id" id="cat-id">
+                    <div class="mb-3">
+                        <label class="form-label" for="cat-name">Name</label>
+                        <input id="cat-name" type="text" class="form-control" name="cat-name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-white" data-bs-dismiss="modal">Cancel</a>
+                    <button type="submit" name="update_cat" class="btn btn-warning" id="cat-update-btn">Update
+                    </button>
+                    <button type="submit" name="save_cat" class="btn btn-primary" id="cat-save-btn">Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
@@ -120,5 +156,6 @@
 <script src="../assets/js/popper.min.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
