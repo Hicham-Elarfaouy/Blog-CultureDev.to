@@ -4,6 +4,7 @@ session_start();
 
 require_once __DIR__.'/../model/Connection.php';
 require_once __DIR__.'/../controller/User_controller.php';
+require_once __DIR__.'/../controller/Categories_controller.php';
 
 function validate_input($input, $type): string
 {
