@@ -2,7 +2,7 @@ $(document).ready(function () {
     $('#example').DataTable();
 });
 
-function togglePassword(input){
+function togglePassword(input) {
     const togglePassword = document.querySelector('#iconPassword');
     const password = document.getElementById(input);
 
@@ -13,24 +13,42 @@ function togglePassword(input){
     togglePassword.classList.toggle('fa-eye-slash');
 }
 
-function openModal(id){
-    $("#cat-save-btn").show();
-    $("#cat-update-btn").hide();
+function openModal() {
+    $("#modal-save-btn").show();
+    $("#modal-update-btn").hide();
     document.getElementById("form").reset();
-    $(id).modal('show');
+    $("#modal").modal('show');
 }
 
-function openEditCat(modal, id, name){
-    $("#cat-save-btn").hide();
-    $("#cat-update-btn").show();
-    document.getElementById("form").reset();
-    $(modal).modal('show');
-
+function openEditCat(id, name) {
+    openModal();
+    $("#modal-save-btn").hide();
+    $("#modal-update-btn").show();
     $("#cat-id").val(id);
     $("#cat-name").val(name);
 }
 
-function deleteCat(id) {
+function openEditPost(id) {
+    openModal();
+    $("#modal-save-btn").hide();
+    $("#modal-update-btn").show();
+
+    $.ajax({
+        type: "POST",
+        url: '../../index.php',
+        data: {specific_post: id},
+        success: function (obj) {
+            obj = JSON.parse(obj);
+            $("#post-id").val(obj['id']);
+            $("#post-auteur").val(obj['auteur']);
+            $("#post-title").val(obj['title']);
+            $("#post-cat").val(obj['cat']);
+            $("#post-desc").val(obj['description']);
+        }
+    })
+}
+
+function deleteItem(id, name) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -41,14 +59,17 @@ function deleteCat(id) {
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
-            $.ajax({
-                type: "POST",
-                url: '../../index.php',
-                data: {delete_cat: id},
-                success: function (obj) {
+            let data = new FormData();
+            data.append(name, id);
+
+            const req = new XMLHttpRequest();
+            req.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
                     location.reload();
                 }
-            });
+            };
+            req.open("POST", "../../index.php");
+            req.send(data);
         }
     });
 }

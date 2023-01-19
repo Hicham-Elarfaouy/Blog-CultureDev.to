@@ -45,12 +45,5 @@ function delete_cat(): void
 {
     $cat = new Categories();
     $cat->setId($_POST['delete_cat']);
-
-
-    if ($cat->delete()) {
-        $_SESSION['message'] = "Categorie has been updated successfully !";
-    } else {
-        $_SESSION['message'] = "Error when update Categorie !";
-    }
-    header('location: ./public/dashboard/categorie.php');
+    $cat->delete();
 }
