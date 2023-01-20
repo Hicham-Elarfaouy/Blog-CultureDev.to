@@ -31,29 +31,27 @@ require_once './app/controller/shared.php';
                     <a class="nav-link" href="index.php">Contact Us</a>
                 </li>
             </ul>
+            <?php if (isset($_SESSION['userId'])): ?>
             <div class="navbar-item navbar-user dropdown">
                 <div style="cursor: pointer" class="navbar-link dropdown-toggle d-flex align-items-center"
                      data-bs-toggle="dropdown">
                             <span>
-                                <span class="me-1">HICHAM</span>
+                                <span class="me-1"><?= $_SESSION['userName']?></span>
                                 <b class="caret"></b>
                             </span>
                 </div>
                 <div class="dropdown-menu me-1 dropdown-menu-lg-end">
-                    <a href="profile.php" class="dropdown-item">DashBoard</a>
+                    <a href="./public/dashboard/statistics.php" class="dropdown-item">DashBoard</a>
                     <div class="dropdown-divider"></div>
-                    <a href="logout.php" class="dropdown-item">Log Out</a>
+                    <a href="./app/controller/logout.php" class="dropdown-item">Log Out</a>
                 </div>
-            </div><!--';
-        } else {
-        echo '-->
-            <div>
-                <a href="./public/pages/login.html" class="btn btn-outline-secondary btn-sm">LOGIN</a>
-                <a href="./public/pages/signup.html" class="btn btn-secondary btn-sm">SIGN UP</a>
             </div>
-            <!--';
-        }
-        ?>-->
+            <?php else: ?>
+            <div>
+                <a href="public/pages/login.php" class="btn btn-outline-secondary btn-sm">LOGIN</a>
+                <a href="public/pages/signup.php" class="btn btn-secondary btn-sm">SIGN UP</a>
+            </div>
+            <?php endif ?>
         </div>
     </div>
 </header>
@@ -92,7 +90,7 @@ require_once './app/controller/shared.php';
                         <input type="text" id="search" class="form-control" placeholder="Search..."
                                value=""/>
                         <button type="button" onclick="search_product('index')" class="input-group-text"><i
-                                class="fa fa-search"></i></button>
+                                    class="fa fa-search"></i></button>
                     </div>
                 </form>
             </div>
@@ -100,7 +98,8 @@ require_once './app/controller/shared.php';
                 <div class='col-xl-3 col-lg-4 col-md-6 col-sm-8'>
                     <div class='card'>
                         <a target="_blank" href="skjhc.html">
-                            <img src='./public/assets/images/posts/testpost.jpg' class='card-img-top align-self-center' style="height: 150px; object-fit: cover">
+                            <img src='./public/assets/images/posts/testpost.jpg' class='card-img-top align-self-center'
+                                 style="height: 150px; object-fit: cover">
                         </a>
                         <div class='card-body'>
                             <h6 class='card-text post-title'>Lorem ipsum dolor sit amet, consectetur adipisicing

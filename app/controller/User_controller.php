@@ -22,7 +22,7 @@ function Signup(): void
         Login($_POST["email"], $_POST["pass"]);
     } else {
         $_SESSION['message'] = "Already exist this email, login !";
-        header('location: ./public/pages/login.html');
+        header('location: ./public/pages/login.php');
     }
 }
 
@@ -35,15 +35,16 @@ function Login($email, $pass): void
     if ($result = $user->login()) {
         if (password_verify($pass, $result['pass'])) {
             $_SESSION['userId'] = $result['id'];
+            $_SESSION['userName'] = $result['first_name'];
 
-            header('location: ./public/dashboard/categorie.php');
+            header('location: ./public/dashboard/statistics.php');
             die();
         }
 
     }
 
     $_SESSION['message'] = "Incorrect information, please check it !";
-    header('location: ./public/pages/login.html');
+    header('location: ./public/pages/login.php');
 }
 
 //function Logout(): void

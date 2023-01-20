@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__.'/../../app/controller/shared.php';
+if(!isset($_SESSION['userId'])){
+    header('location: ../../index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,16 +55,16 @@ require_once __DIR__.'/../../app/controller/shared.php';
                             </span>
                 </div>
                 <div class="dropdown-menu me-1 dropdown-menu-lg-end">
-                    <a href="profile.php" class="dropdown-item">DashBoard</a>
+                    <a href="statistics.php" class="dropdown-item">DashBoard</a>
                     <div class="dropdown-divider"></div>
-                    <a href="logout.php" class="dropdown-item">Log Out</a>
+                    <a href="../../app/controller/logout.php" class="dropdown-item">Log Out</a>
                 </div>
             </div><!--';
             } else {
                 echo '-->
 <!--            <div>-->
-<!--                <a href="login.html" class="btn btn-outline-secondary btn-sm">LOGIN</a>-->
-<!--                <a href="signup.html" class="btn btn-secondary btn-sm">SIGN UP</a>-->
+<!--                <a href="login.php" class="btn btn-outline-secondary btn-sm">LOGIN</a>-->
+<!--                <a href="signup.php" class="btn btn-secondary btn-sm">SIGN UP</a>-->
 <!--            </div>-->
             <!--';
             }

@@ -1,5 +1,8 @@
 <?php
     require_once __DIR__.'/../../app/controller/shared.php';
+if(!isset($_SESSION['userId'])){
+    header('location: ../../index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,10 +42,6 @@
                     <a class="nav-link" href="./categorie.php">Categories</a>
                 </li>
             </ul>
-            <!--<?php
-            if (isset($_SESSION['user'])) {
-            $name = $_SESSION['user'][1].' '.$_SESSION['user'][2];
-            echo '-->
             <div class="navbar-item navbar-user dropdown">
                 <div style="cursor: pointer" class="navbar-link dropdown-toggle d-flex align-items-center"
                      data-bs-toggle="dropdown">
@@ -52,20 +51,11 @@
                             </span>
                 </div>
                 <div class="dropdown-menu me-1 dropdown-menu-lg-end">
-                    <a href="profile.php" class="dropdown-item">DashBoard</a>
+                    <a href="statistics.php" class="dropdown-item">DashBoard</a>
                     <div class="dropdown-divider"></div>
-                    <a href="logout.php" class="dropdown-item">Log Out</a>
+                    <a href="../../app/controller/logout.php" class="dropdown-item">Log Out</a>
                 </div>
-            </div><!--';
-        } else {
-        echo '-->
-<!--            <div>-->
-<!--                <a href="login.html" class="btn btn-outline-secondary btn-sm">LOGIN</a>-->
-<!--                <a href="signup.html" class="btn btn-secondary btn-sm">SIGN UP</a>-->
-<!--            </div>-->
-            <!--';
-        }
-        ?>-->
+            </div>
         </div>
     </div>
 </header>

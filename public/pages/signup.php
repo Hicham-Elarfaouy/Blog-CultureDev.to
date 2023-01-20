@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__.'/../../app/controller/shared.php';
+if(isset($_SESSION['userId'])){
+    header('location: ../../index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,33 +34,10 @@
                     <a class="nav-link" href="../../index.php">Contact Us</a>
                 </li>
             </ul>
-            <!--<?php
-            if (isset($_SESSION['user'])) {
-            $name = $_SESSION['user'][1].' '.$_SESSION['user'][2];
-            echo '-->
-            <div class="navbar-item navbar-user dropdown">
-                <div style="cursor: pointer" class="navbar-link dropdown-toggle d-flex align-items-center"
-                     data-bs-toggle="dropdown">
-                            <span>
-                                <span class="me-1">HICHAM</span>
-                                <b class="caret"></b>
-                            </span>
-                </div>
-                <div class="dropdown-menu me-1 dropdown-menu-lg-end">
-                    <a href="profile.php" class="dropdown-item">DashBoard</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="logout.php" class="dropdown-item">Log Out</a>
-                </div>
-            </div><!--';
-        } else {
-        echo '-->
             <div>
-                <a href="login.html" class="btn btn-outline-secondary btn-sm">LOGIN</a>
+                <a href="login.php" class="btn btn-outline-secondary btn-sm">LOGIN</a>
                 <a href="signup.html" class="btn btn-secondary btn-sm">SIGN UP</a>
             </div>
-            <!--';
-        }
-        ?>-->
         </div>
     </div>
 </header>
@@ -74,7 +57,7 @@
                 <div class="d-flex justify-content-center my-4">
                     <button name="signup" class="btn btn-success w-50">SIGN UP</button>
                 </div>
-                <p class="text-center fw-w300">Already have an account ? <a href="login.html" class="text-success">LOGIN</a>
+                <p class="text-center fw-w300">Already have an account ? <a href="login.php" class="text-success">LOGIN</a>
                 </p>
             </form>
         </div>
