@@ -1,5 +1,5 @@
 <?php
-    require_once __DIR__.'/../../app/controller/shared.php';
+require_once __DIR__.'/../../app/controller/shared.php';
 if(!isset($_SESSION['userId'])){
     header('location: ../../index.php');
 }
@@ -42,6 +42,10 @@ if(!isset($_SESSION['userId'])){
                     <a class="nav-link" href="./categorie.php">Categories</a>
                 </li>
             </ul>
+            <!--<?php
+            if (isset($_SESSION['user'])) {
+                $name = $_SESSION['user'][1].' '.$_SESSION['user'][2];
+                echo '-->
             <div class="navbar-item navbar-user dropdown">
                 <div style="cursor: pointer" class="navbar-link dropdown-toggle d-flex align-items-center"
                      data-bs-toggle="dropdown">
@@ -55,16 +59,25 @@ if(!isset($_SESSION['userId'])){
                     <div class="dropdown-divider"></div>
                     <a href="../../app/controller/logout.php" class="dropdown-item">Log Out</a>
                 </div>
-            </div>
+            </div><!--';
+            } else {
+                echo '-->
+<!--            <div>-->
+<!--                <a href="login.php" class="btn btn-outline-secondary btn-sm">LOGIN</a>-->
+<!--                <a href="signup.php" class="btn btn-secondary btn-sm">SIGN UP</a>-->
+<!--            </div>-->
+            <!--';
+            }
+            ?>-->
         </div>
     </div>
 </header>
 <main>
     <div class="card shadow my-5 container">
         <div class="d-sm-flex align-items-center justify-content-between m-4 mb-2">
-            <h1 class="h5 mb-0">Categories</h1>
+            <h1 class="h5 mb-0">Posts</h1>
             <button onclick="openModal()" class="btn btn-sm shadow-sm bg-success text-white"><i class="fa-solid fa-plus fa-md"></i>
-                Add Categories
+                Add Post
             </button>
         </div>
         <hr>
@@ -73,32 +86,42 @@ if(!isset($_SESSION['userId'])){
                 <table id="example" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Categorie</th>
+                        <th>Date</th>
+                        <th>Auteur</th>
+                        <th>Description</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
-                        foreach (get_cat() as $cat){
-                            $d = $cat['id'];
-                            $dd = $cat['name'];
-                            echo "
+                    foreach (get_post() as $post){
+                        echo "
                             <tr>
-                                <td>$cat[name]</td>
+                                <td class='text-truncate' style='max-width: 200px;'>$post[title]</td>
+                                <td>$post[cat]</td>
+                                <td>$post[date]</td>
+                                <td>$post[auteur]</td>
+                                <td class='text-truncate' style='max-width: 200px;'>$post[description]</td>
                                 <td>
                                     <div class='d-flex justify-content-around'>
-                                        <i role='button' onclick='openEditCat($cat[id], `$cat[name]`)' class='fa-solid fa-pen-to-square text-primary'></i>
-                                        <i role='button' onclick='deleteItem($cat[id], `delete_cat`)' class='fa-solid fa-trash-can text-danger ms-3'></i>
+                                        <i role='button' onclick='openEditPost($post[id])' class='fa-solid fa-pen-to-square text-primary'></i>
+                                        <i role='button' onclick='deleteItem($post[id], `delete_post`)' class='fa-solid fa-trash-can text-danger ms-3'></i>
                                     </div>
                                 </td>
                             </tr>
                             ";
-                        }
+                    }
                     ?>
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Categorie</th>
+                        <th>Date</th>
+                        <th>Auteur</th>
+                        <th>Description</th>
                         <th></th>
                     </tr>
                     </tfoot>
@@ -115,22 +138,37 @@ if(!isset($_SESSION['userId'])){
             <form action="../../index.php" method="POST" id="form" enctype="multipart/form-data"
                   data-parsley-validate>
                 <div class="modal-header">
-                    <h5 class="modal-title">Categories</h5>
+                    <h5 class="modal-title">Post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" name="cat-id" id="cat-id">
+                    <input type="text" name="post-id" id="post-id">
+                    <input type="text" name="post-auteur" id="post-auteur" value="<?=$_SESSION['userId']?>">
                     <div class="mb-3">
-                        <label class="form-label" for="cat-name">Name</label>
-                        <input id="cat-name" type="text" class="form-control" name="cat-name">
+                        <label class="form-label" for="post-title">Title</label>
+                        <input id="post-title" type="text" class="form-control" name="post-title">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="post-cat">Categorie</label>
+                        <select class="form-control form-select" id="post-cat" name="post-cat">
+                            <?php
+                            foreach (get_cat() as $cat) {
+                                echo "<option value='$cat[id]'>$cat[name]</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label" for="post-desc">Description</label>
+                        <textarea class="form-control" rows="5" id="post-desc" name="post-desc"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-white" data-bs-dismiss="modal">Cancel</a>
-                    <button type="submit" name="update_cat" class="btn btn-warning" id="modal-update-btn">Update
+                    <button type="submit" name="update_post" class="btn btn-warning" id="modal-update-btn">Update
                     </button>
-                    <button type="submit" name="save_cat" class="btn btn-primary" id="modal-save-btn">Save
+                    <button type="submit" name="save_post" class="btn btn-primary" id="modal-save-btn">Save
                     </button>
                 </div>
             </form>
