@@ -32,6 +32,7 @@ function save_post(): void
     $post->setDescription($_POST['post-desc']);
     $post->setDate(date("Y-m-d h:i:s"));
     $post->setAuteur($_POST['post-auteur']);
+    $post->setImage(upload_image($_FILES["post-img"]));
 
 
 
@@ -53,6 +54,7 @@ function update_post(): void
     $post->setDescription($_POST['post-desc']);
     $post->setDate(date("Y-m-d h:i:s"));
     $post->setAuteur($_POST['post-auteur']);
+    $post->setImage(upload_image($_FILES["post-img"]));
 
 
     if ($post->update()) {
@@ -65,7 +67,13 @@ function update_post(): void
 
 function delete_post(): void
 {
-    $post = new Post();
-    $post->setId($_POST['delete_post']);
-    $post->delete();
+    try {
+        $post = new Post();
+        $post->setId($_POST['delete_post']);
+        $image = $post->specific_post()['image'];
+        delete_image($image);
+        $post->delete();
+    }catch (Exception $exception){
+        echo $exception;
+    }
 }

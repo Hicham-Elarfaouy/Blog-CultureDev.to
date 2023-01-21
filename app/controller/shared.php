@@ -20,25 +20,25 @@ function validate_input($input, $type): string
     };
 }
 
-function upload_image($image, $dir): string
+function upload_image($image): string
 {
     if (!$image["size"] > 0) {
         return '';
     }
 
-    $target_dir = "../assets/images/$dir/";
+    $target_dir = __DIR__."/../../public/assets/images/posts/";
     $target_file = $target_dir . basename($image["name"]);
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
         $_SESSION['message'] = "Sorry, only JPG, JPEG, PNG files are allowed !";
-        header("location: $dir.php");
+        header('location: ./public/dashboard/Posts.php');
         die();
     }
 
     if ($image["size"] > 10048576) {
         $_SESSION['message'] = "Sorry, your image is large than 1mb !";
-        header("location: $dir.php");
+        header('location: ./public/dashboard/Posts.php');
         die();
     }
 
@@ -48,7 +48,7 @@ function upload_image($image, $dir): string
 
     if (file_exists($target_dir . $rename)) {
         $_SESSION['message'] = "Sorry, file already exists !";
-        header("location: $dir.php");
+        header('location: ./public/dashboard/Posts.php');
         die();
     }
 
@@ -56,15 +56,15 @@ function upload_image($image, $dir): string
         return $rename;
     } else {
         $_SESSION['message'] = "Sorry, there was an error uploading your image.";
-        header("location: $dir.php");
+        header('location: ./public/dashboard/Posts.php');
         die();
     }
 
     return '';
 }
 
-function delete_image($image, $dir): void
+function delete_image($image): void
 {
-    $target_dir = "../assets/images/$dir/";
+    $target_dir = __DIR__."/../../public/assets/images/posts/";
     unlink($target_dir . $image);
 }

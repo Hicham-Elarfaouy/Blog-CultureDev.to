@@ -86,6 +86,7 @@ if(!isset($_SESSION['userId'])){
                 <table id="example" class="table table-striped table-bordered">
                     <thead>
                     <tr>
+                        <th>Image</th>
                         <th>Title</th>
                         <th>Categorie</th>
                         <th>Date</th>
@@ -97,8 +98,12 @@ if(!isset($_SESSION['userId'])){
                     <tbody>
                     <?php
                     foreach (get_post() as $post){
+                        $image = $post['image'] != '' ? $post['image'] : 'default.jpg';
                         echo "
-                            <tr>
+                            <tr class='align-middle'>
+                                <td>
+                                    <img src='../assets/images/posts/$image' class='rounded' style='width: 40px; height: 40px;'>
+                                </td>
                                 <td class='text-truncate' style='max-width: 200px;'>$post[title]</td>
                                 <td>$post[cat]</td>
                                 <td>$post[date]</td>
@@ -117,6 +122,7 @@ if(!isset($_SESSION['userId'])){
                     </tbody>
                     <tfoot>
                     <tr>
+                        <th>Image</th>
                         <th>Title</th>
                         <th>Categorie</th>
                         <th>Date</th>
@@ -135,8 +141,7 @@ if(!isset($_SESSION['userId'])){
 <div class="modal fade" id="modal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="../../index.php" method="POST" id="form" enctype="multipart/form-data"
-                  data-parsley-validate>
+            <form action="../../index.php" method="POST" id="form" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title">Post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
@@ -145,6 +150,10 @@ if(!isset($_SESSION['userId'])){
                 <div class="modal-body">
                     <input type="text" name="post-id" id="post-id">
                     <input type="text" name="post-auteur" id="post-auteur" value="<?=$_SESSION['userId']?>">
+                    <div class="mb-3">
+                        <label class="form-label" for="post-img">Image</label>
+                        <input id="post-img" type="file" class="form-control" name="post-img" accept="image/png, image/jpeg">
+                    </div>
                     <div class="mb-3">
                         <label class="form-label" for="post-title">Title</label>
                         <input id="post-title" type="text" class="form-control" name="post-title">
@@ -169,6 +178,8 @@ if(!isset($_SESSION['userId'])){
                     <button type="submit" name="update_post" class="btn btn-warning" id="modal-update-btn">Update
                     </button>
                     <button type="submit" name="save_post" class="btn btn-primary" id="modal-save-btn">Save
+                    </button>
+                    <button type="button" name="multi_post" onclick="saveMultiPost()" class="btn btn-primary" id="modal-multi-btn">New Post
                     </button>
                 </div>
             </form>

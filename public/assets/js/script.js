@@ -15,6 +15,7 @@ function togglePassword(input) {
 
 function openModal() {
     $("#modal-save-btn").show();
+    $("#modal-multi-btn").show();
     $("#modal-update-btn").hide();
     document.getElementById("form").reset();
     $("#modal").modal('show');
@@ -31,6 +32,7 @@ function openEditCat(id, name) {
 function openEditPost(id) {
     openModal();
     $("#modal-save-btn").hide();
+    $("#modal-multi-btn").hide();
     $("#modal-update-btn").show();
 
     $.ajax({
@@ -72,4 +74,30 @@ function deleteItem(id, name) {
             req.send(data);
         }
     });
+}
+
+function saveMultiPost(){
+    $('#modal').on('hidden.bs.modal', function () {
+        location.reload();
+    })
+
+    let data = new FormData();
+    data.append('save_post', 'true');
+    data.append('post-title', $("#post-title").val());
+    data.append('post-cat', $("#post-cat").val());
+    data.append('post-desc', $("#post-desc").val());
+    data.append('post-auteur', $("#post-auteur").val());
+    data.append('post-img', $("#post-img")[0].files[0]);
+
+    const req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            // location.reload();
+            console.log('save multi')
+        }
+    };
+    req.open("POST", "../../index.php");
+    req.send(data);
+
+    document.getElementById("form").reset();
 }
