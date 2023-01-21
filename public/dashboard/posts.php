@@ -170,6 +170,8 @@ if(!isset($_SESSION['userId'])){
                     </button>
                     <button type="submit" name="save_post" class="btn btn-primary" id="modal-save-btn">Save
                     </button>
+                    <button type="button" name="multi_post" onclick="saveMultiPost()" class="btn btn-primary" id="modal-multi-btn">New Post
+                    </button>
                 </div>
             </form>
         </div>
