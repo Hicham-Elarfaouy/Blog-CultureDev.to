@@ -87,6 +87,7 @@ function saveMultiPost(){
     data.append('post-cat', $("#post-cat").val());
     data.append('post-desc', $("#post-desc").val());
     data.append('post-auteur', $("#post-auteur").val());
+    data.append('post-img', $("#post-img")[0].files[0]);
 
     const req = new XMLHttpRequest();
     req.onreadystatechange = function () {

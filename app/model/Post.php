@@ -8,6 +8,12 @@ class Post extends Connection
     private string $description;
     private string $date;
     private int $auteur;
+    private string $image;
+
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
 
     public function setId(int $id): void
     {
@@ -60,7 +66,7 @@ class Post extends Connection
     function read(): bool|array
     {
         try {
-            $sql = "SELECT p.id, p.title, c.name AS cat, p.description, p.date, CONCAT(u.first_name,' ', u.last_name) AS auteur
+            $sql = "SELECT p.id, p.title, c.name AS cat, p.description, p.date, CONCAT(u.first_name,' ', u.last_name) AS auteur, p.image 
                     FROM posts AS p
                     INNER JOIN categories AS c ON p.cat = c.id
                     INNER JOIN user AS u ON p.auteur = u.id";
@@ -79,7 +85,7 @@ class Post extends Connection
     function add(): bool
     {
         try {
-            $sql = "INSERT INTO posts VALUES (NULL, :title, :cat, :desc, :date, :auteur)";
+            $sql = "INSERT INTO posts VALUES (NULL, :title, :cat, :desc, :date, :auteur, :image)";
             $stmt = $this->con()->prepare($sql);
 
             $stmt->bindParam(':title', $this->title, PDO::PARAM_STR);
@@ -87,6 +93,7 @@ class Post extends Connection
             $stmt->bindParam(':desc', $this->description, PDO::PARAM_STR);
             $stmt->bindParam(':date', $this->date, PDO::PARAM_STR);
             $stmt->bindParam(':auteur', $this->auteur, PDO::PARAM_INT);
+            $stmt->bindParam(':image', $this->image);
 
             $stmt->execute();
 
@@ -104,8 +111,14 @@ class Post extends Connection
     function update(): bool
     {
         try {
-            $sql = "UPDATE posts SET title = :title, cat = :cat, description = :desc, date = :date, auteur = :auteur WHERE id = :id";
-            $stmt = $this->con()->prepare($sql);
+            if($this->image != ''){
+                $sql = "UPDATE posts SET title = :title, cat = :cat, description = :desc, date = :date, auteur = :auteur, image = :image WHERE id = :id";
+                $stmt = $this->con()->prepare($sql);
+                $stmt->bindParam(':image', $this->image);
+            }else{
+                $sql = "UPDATE posts SET title = :title, cat = :cat, description = :desc, date = :date, auteur = :auteur WHERE id = :id";
+                $stmt = $this->con()->prepare($sql);
+            }
 
             $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
             $stmt->bindParam(':title', $this->title, PDO::PARAM_STR);

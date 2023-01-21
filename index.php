@@ -95,27 +95,25 @@ require_once './app/controller/shared.php';
                 </form>
             </div>
             <div class="row g-3 mt-1 justify-content-center justify-content-md-start">
-                <div class='col-xl-3 col-lg-4 col-md-6 col-sm-8'>
-                    <div class='card'>
-                        <a target="_blank" href="skjhc.html">
-                            <img src='./public/assets/images/posts/testpost.jpg' class='card-img-top align-self-center'
-                                 style="height: 150px; object-fit: cover">
-                        </a>
-                        <div class='card-body'>
-                            <h6 class='card-text post-title'>Lorem ipsum dolor sit amet, consectetur adipisicing
-                                elit. Numquam odit quae quos suscipit vitae voluptas. A amet, commodi dicta error, eum
-                                ipsam itaque laudantium maiores maxime minima quasi qui vitae.</h6>
-                            <span style="font-size: 10px" class="bg-danger rounded p-1 text-white">#HTML</span>
-                            <p class="mb-0 post-description fw-w300">description Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Ad aliquam blanditiis culpa debitis excepturi, fugit iure molestiae
-                                numquam quam quas unde vero voluptatem. Aut ea, esse natus officia perferendis quos?</p>
+                <?php
+                foreach (get_post() as $post){
+                    $image = $post['image'] != '' ? $post['image'] : 'default.jpg';
+                    echo "
+                    <div class='col-xl-3 col-lg-4 col-md-6 col-sm-8'>
+                        <div class='card'>
+                            <a target='_blank' href='skjhc.html'>
+                                <img src='./public/assets/images/posts/$image' class='card-img-top align-self-center'
+                                     style='height: 150px; object-fit: cover'>
+                            </a>
+                            <div class='card-body'>
+                                <h6 class='card-text post-title'>$post[title]</h6>
+                                <span style='font-size: 10px' class='bg-danger rounded p-1 text-white'>#$post[cat]</span>
+                                <p class='mb-0 post-description fw-w300'>$post[description]</p>
+                            </div>
                         </div>
-                    </div>
-
-                </div>
-                <!--";
+                    </div>";
                 }
-                ?>-->
+                ?>
             </div>
         </div>
     </div>
