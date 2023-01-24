@@ -16,10 +16,10 @@ function get_specific_post(): void
     die();
 }
 
-function get_post(): bool|array
+function get_post($condition = ''): bool|array
 {
     $post = new Post();
-    return $post->read();
+    return $post->read($condition);
 }
 
 function save_post(): void

@@ -36,7 +36,7 @@ require_once './app/controller/shared.php';
                 <div style="cursor: pointer" class="navbar-link dropdown-toggle d-flex align-items-center"
                      data-bs-toggle="dropdown">
                             <span>
-                                <span class="me-1"><?= $_SESSION['userName']?></span>
+                                <span class="me-1 text-uppercase"><?= $_SESSION['userName']?></span>
                                 <b class="caret"></b>
                             </span>
                 </div>

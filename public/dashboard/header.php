@@ -47,7 +47,7 @@ if(!isset($_SESSION['userId'])){
                 <div style="cursor: pointer" class="navbar-link dropdown-toggle d-flex align-items-center"
                      data-bs-toggle="dropdown">
                             <span>
-                                <span class="me-1">HICHAM</span>
+                                <span class="me-1 text-uppercase"><?= $_SESSION['userName'] ?></span>
                                 <b class="caret"></b>
                             </span>
                 </div>

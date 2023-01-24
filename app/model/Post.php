@@ -63,13 +63,14 @@ class Post extends Connection
         }
     }
 
-    function read(): bool|array
+    function read($condition): bool|array
     {
         try {
             $sql = "SELECT p.id, p.title, c.name AS cat, p.description, p.date, CONCAT(u.first_name,' ', u.last_name) AS auteur, p.image 
                     FROM posts AS p
                     INNER JOIN categories AS c ON p.cat = c.id
-                    INNER JOIN user AS u ON p.auteur = u.id";
+                    INNER JOIN user AS u ON p.auteur = u.id
+                    $condition";
             $stmt = $this->con()->prepare($sql);
 
             $stmt->execute();
