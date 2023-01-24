@@ -92,8 +92,9 @@ function saveMultiPost(){
     const req = new XMLHttpRequest();
     req.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            // location.reload();
-            console.log('save multi')
+            if(this.responseText === 'error'){
+                location.reload();
+            }
         }
     };
     req.open("POST", "../../index.php");
@@ -101,3 +102,43 @@ function saveMultiPost(){
 
     document.getElementById("form").reset();
 }
+
+function incorrectField(field, text){
+    field.style.border = '1px solid red';
+    const LI = document.createElement("li");
+    LI.append(text);
+    return LI;
+}
+
+const FORM = document.getElementById("formAuth");
+const INPUTS = document.getElementsByTagName("input");
+const VALIDATION = document.getElementById("validation");
+FORM.addEventListener("submit",  (e)=>{
+    Object.entries(INPUTS).forEach(e=>{
+        e[1].style.border = '';
+    });
+
+    VALIDATION.textContent = '';
+    const LIST = document.createElement("ul");
+
+    if(!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/.test(INPUTS['email'].value)){
+        LIST.append(incorrectField(INPUTS['email'], 'Invalid email format !'));
+    }
+    if(!/^[a-zA-Z0-9]{8,}$/.test(INPUTS['pass'].value)){
+        LIST.append(incorrectField(INPUTS['pass'], 'Password must contains at least 8 numbers & alpha !'));
+    }
+
+    if(INPUTS['first_name'] && INPUTS['last_name']){
+        if(!/^[a-zA-Z]+$/.test(INPUTS['first_name'].value)){
+            LIST.append(incorrectField(INPUTS['first_name'], 'Invalid first name format accept only alpha !'));
+        }
+
+        if(!/^[a-zA-Z]+$/.test(INPUTS['last_name'].value)){
+            LIST.append(incorrectField(INPUTS['last_name'], 'Invalid last name format accept only alpha !'));
+        }
+    }
+    VALIDATION.append(LIST);
+    if(LIST.hasChildNodes()){
+        e.preventDefault();
+    }
+});

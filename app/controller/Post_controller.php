@@ -1,7 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\NoReturn;
-
 require __DIR__ . '/../model/Post.php';
 
 if (isset($_POST['get_post'])) get_post();
@@ -26,16 +24,26 @@ function get_post(): bool|array
 
 function save_post(): void
 {
+    $post_title = validate_input($_POST["post-title"], 'text');
+    $post_desc = validate_input($_POST["post-desc"], 'text');
+
+    if ($post_title == 'null' || $post_desc == 'null') {
+        $_SESSION['message'] = "Invalid inputs When Add Post !";
+        if($_POST['save_post'] == 'true'){
+            echo 'error';
+            die;
+        }
+        header('location: ./public/dashboard/Posts.php');
+        die;
+    }
+
     $post = new Post();
-    $post->setTitle($_POST['post-title']);
+    $post->setTitle($post_title);
     $post->setCat($_POST['post-cat']);
-    $post->setDescription($_POST['post-desc']);
+    $post->setDescription($post_desc);
     $post->setDate(date("Y-m-d h:i:s"));
     $post->setAuteur($_POST['post-auteur']);
     $post->setImage(upload_image($_FILES["post-img"]));
-
-
-
 
     if ($post->add()) {
         $_SESSION['message'] = "Post has been added successfully !";
@@ -47,11 +55,20 @@ function save_post(): void
 
 function update_post(): void
 {
+    $post_title = validate_input($_POST["post-title"], 'text');
+    $post_desc = validate_input($_POST["post-desc"], 'text');
+
+    if ($post_title == 'null' || $post_desc == 'null') {
+        $_SESSION['message'] = "Invalid inputs When Update Post !";
+        header('location: ./public/dashboard/Posts.php');
+        die;
+    }
+
     $post = new Post();
     $post->setId($_POST['post-id']);
-    $post->setTitle($_POST['post-title']);
+    $post->setTitle($post_title);
     $post->setCat($_POST['post-cat']);
-    $post->setDescription($_POST['post-desc']);
+    $post->setDescription($post_desc);
     $post->setDate(date("Y-m-d h:i:s"));
     $post->setAuteur($_POST['post-auteur']);
     $post->setImage(upload_image($_FILES["post-img"]));

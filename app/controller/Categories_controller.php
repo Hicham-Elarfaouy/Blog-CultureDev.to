@@ -14,8 +14,16 @@ function get_cat(): bool|array
 
 function save_cat(): void
 {
+    $name = validate_input($_POST["cat-name"], 'text');
+
+    if ($name == 'null') {
+        $_SESSION['message'] = "Invalid inputs When Add Categories !";
+        header('location: ./public/dashboard/categorie.php');
+        die;
+    }
+
     $cat = new Categories();
-    $cat->setName($_POST['cat-name']);
+    $cat->setName($name);
 
 
     if ($cat->add()) {
@@ -28,9 +36,17 @@ function save_cat(): void
 
 function update_cat(): void
 {
+    $name = validate_input($_POST["cat-name"], 'text');
+
+    if ($name == 'null') {
+        $_SESSION['message'] = "Invalid inputs When Update Categories !";
+        header('location: ./public/dashboard/categorie.php');
+        die;
+    }
+
     $cat = new Categories();
     $cat->setId($_POST['cat-id']);
-    $cat->setName($_POST['cat-name']);
+    $cat->setName($name);
 
 
     if ($cat->update()) {
