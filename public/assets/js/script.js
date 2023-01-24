@@ -103,6 +103,11 @@ function saveMultiPost(){
     document.getElementById("form").reset();
 }
 
+function searchPost(){
+    let search = document.querySelector('#search').value;
+    window.location.href = "index.php?search="+search;
+}
+
 function incorrectField(field, text){
     field.style.border = '1px solid red';
     const LI = document.createElement("li");

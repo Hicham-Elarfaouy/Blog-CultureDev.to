@@ -63,10 +63,11 @@ require_once './app/controller/shared.php';
                     <a href="index.php" class="link-light">All Categories</a>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <a href="index.php?cat=1" class="list-group-item">Front End</a>
-                    <a href="index.php?cat=2" class="list-group-item">Front End</a>
-                    <a href="index.php?cat=3" class="list-group-item">Front End</a>
-                    <a href="index.php?cat=4" class="list-group-item">Front End</a>
+                    <?php
+                    foreach (get_cat() as $cat){
+                        echo "<a href='index.php?cat=$cat[id]' class='list-group-item'>$cat[name]</a>";
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
@@ -75,20 +76,22 @@ require_once './app/controller/shared.php';
                 <form>
                     <div class="input-group">
                         <input type="text" id="search" class="form-control" placeholder="Search..."
-                               value=""/>
-                        <button type="button" onclick="search_product('index')" class="input-group-text"><i
+                               value="<?= $_GET['search'] ?? '' ?>"/>
+                        <button type="button" onclick="searchPost()" class="input-group-text"><i
                                     class="fa fa-search"></i></button>
                     </div>
                 </form>
             </div>
             <div class="row g-3 mt-1 justify-content-center justify-content-md-start">
                 <?php
-                foreach (get_post() as $post){
+                $cat = isset($_GET['cat']) ? "WHERE c.id = $_GET[cat]" : '';
+                $search = isset($_GET['search']) ? "WHERE (p.title LIKE ('%$_GET[search]%') OR p.description LIKE ('%$_GET[search]%') OR c.name LIKE ('%$_GET[search]%'))" : '';
+                foreach (get_post("$cat $search") as $post){
                     $image = $post['image'] != '' ? $post['image'] : 'default.jpg';
                     echo "
                     <div class='col-xl-3 col-lg-4 col-md-6 col-sm-8'>
                         <div class='card'>
-                            <a target='_blank' href='skjhc.html'>
+                            <a target='_blank' href='./public/pages/post.php?post_id=$post[id]'>
                                 <img src='./public/assets/images/posts/$image' class='card-img-top align-self-center'
                                      style='height: 150px; object-fit: cover'>
                             </a>
