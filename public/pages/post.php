@@ -28,6 +28,14 @@ $image = $post[0]['image'] != '' ? $post[0]['image'] : 'default.jpg';
                                     <i class="fa-solid fa-bars-staggered me-3"></i>
                                     <span class="bg-danger rounded px-2 py-1 text-white"># <?= $post[0]['cat'] ?></span>
                                 </div>
+                                <div class="mb-3">
+                                    <i class="fa-solid fa-user-large me-3"></i>
+                                    <span><?= $post[0]['auteur'] ?></span>
+                                </div>
+                                <div class="mb-3">
+                                    <i class="fa-solid fa-calendar-alt me-3"></i>
+                                    <span><?= $post[0]['date'] ?></span>
+                                </div>
                             </div>
                         </div>
 
