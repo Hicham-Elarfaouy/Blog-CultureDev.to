@@ -58,3 +58,9 @@ function Login($email, $pass): void
     header('location: ./public/pages/login.php');
     die;
 }
+
+function get_user(): bool|array
+{
+    $user = new User();
+    return $user->read();
+}

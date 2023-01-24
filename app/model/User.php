@@ -79,20 +79,21 @@ class User extends Connection
         }
     }
 
-//    public function display($id)
-//    {
-//
-//        $stmt = $this->con()->prepare("SELECT * FROM user WHERE id=? ");
-//        $stmt->execute([$id]);
-//        return $stmt->fetch();
-//
-//    }
-//
-//    public function logout()
-//    {
-//        unset($_SESSION['userId']);
-//        unset($_SESSION['isAdmin']);
-//    }
+    public function read(): bool|array
+    {
+        try {
+            $sql = "SELECT * FROM user";
+            $stmt = $this->con()->prepare($sql);
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }
 
 
