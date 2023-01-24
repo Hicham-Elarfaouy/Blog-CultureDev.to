@@ -88,7 +88,7 @@ require_once './app/controller/shared.php';
                     echo "
                     <div class='col-xl-3 col-lg-4 col-md-6 col-sm-8'>
                         <div class='card'>
-                            <a target='_blank' href='skjhc.html'>
+                            <a target='_blank' href='./public/pages/post.php?post_id=$post[id]'>
                                 <img src='./public/assets/images/posts/$image' class='card-img-top align-self-center'
                                      style='height: 150px; object-fit: cover'>
                             </a>

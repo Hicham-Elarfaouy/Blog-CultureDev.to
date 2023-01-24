@@ -11,7 +11,7 @@ if(isset($_SESSION['userId'])){
     <meta name="Auteur" content="Hicham">
     <meta name="Description"
           content="DevCulture.com is a platform that would focus exclusively on articles and posts related to the culture of software development. It would be a community-driven platform where software developers can share their knowledge, experiences, and insights through written content, such as articles and blog posts.">
-    <title>Authentication</title>
+    <title>Home</title>
     <link href="../assets/css/style.css" rel="stylesheet">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/css/vendor.min.css" rel="stylesheet">
