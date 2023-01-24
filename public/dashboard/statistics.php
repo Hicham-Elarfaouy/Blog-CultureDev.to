@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__.'/../../app/controller/shared.php';
-if(!isset($_SESSION['userId'])){
-    header('location: ../../index.php');
-}
+require_once './header.php';
+?>
+<?php
+require_once './footer.php';
+?>
