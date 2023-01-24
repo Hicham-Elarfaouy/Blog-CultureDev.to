@@ -56,19 +56,6 @@ require_once './app/controller/shared.php';
     </div>
 </header>
 <main>
-    <?php if (isset($_SESSION['message'])): ?>
-        <div class="d-flex justify-content-center">
-            <div class="alert alert-secondary alert-dismissible fade show mt-5 w-50">
-                <strong>Message : </strong>
-                <?php
-                echo $_SESSION['message'];
-                unset($_SESSION['message']);
-                ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        </div>
-    <?php endif ?>
     <div class="row mx-2 my-5">
         <div class=" d-none d-md-block col-lg-3 col-md-3">
             <div class="card">
