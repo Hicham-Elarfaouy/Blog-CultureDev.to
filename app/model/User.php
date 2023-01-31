@@ -2,12 +2,11 @@
 
 class User extends Connection
 {
-    public int $id;
-    public string $first_name;
-    public string $last_name;
-    public string $email;
-    public string $password;
-    public bool $is_admin;
+    private int $id;
+    private string $first_name;
+    private string $last_name;
+    private string $email;
+    private string $password;
 
     public function setId($id): void
     {
@@ -32,11 +31,6 @@ class User extends Connection
     public function setPassword($password): void
     {
         $this->password = $password;
-    }
-
-    public function setAdmin($is_admin): void
-    {
-        $this->is_admin = $is_admin;
     }
 
     public function signup(): bool

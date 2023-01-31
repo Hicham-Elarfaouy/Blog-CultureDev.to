@@ -36,7 +36,7 @@ if(isset($_SESSION['userId'])){
             </ul>
             <div>
                 <a href="login.php" class="btn btn-outline-secondary btn-sm">LOGIN</a>
-                <a href="signup.html" class="btn btn-secondary btn-sm">SIGN UP</a>
+                <a href="signup.php" class="btn btn-secondary btn-sm">SIGN UP</a>
             </div>
         </div>
     </div>
